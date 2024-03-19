@@ -1,0 +1,10 @@
+runtime: python39
+instance_class: F2
+automatic_scaling: 
+  target_cpu_utilization: 0.65
+entrypoint: gunicorn --timeout 120 app.whatsapp.app:app
+
+env_variables:
+  APP_PORT: "3000"
+  APP_HOST: "0.0.0.0"
+  CHAT_MODEL: "gpt-4-turbo-preview"
