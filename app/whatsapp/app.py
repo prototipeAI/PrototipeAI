@@ -17,7 +17,7 @@ logger.setLevel(logging.DEBUG)
 chat_client = TwilioWhatsAppClient(
     account_sid=os.getenv("TWILIO_ACCOUNT_SID"),
     auth_token=os.getenv("TWILIO_AUTH_TOKEN"),
-    from_number=("TWILLIO_WHATSAPP_NUMBER"),
+    from_number=os.getenv("TWILLIO_WHATSAPP_NUMBER"),
 )
 
 app = Flask(__name__)
@@ -34,6 +34,7 @@ def reply_to_whatsapp_message():
         phone_number=request.values.get("From"),
         name=request.values.get("ProfileName", request.values.get("From")),
         )
+        logger.debug(f"Sender: {sender}")
         logger.debug(f"Recebendo mensagem: {incoming_msg}")
 
         # Construindo mensagens para a conversa
