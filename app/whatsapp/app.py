@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from clients.twilio import TwilioWhatsAppClient, TwilioWhatsAppMessage
 from twilio.twiml.messaging_response import MessagingResponse  # Certifique-se de ter essa importação
 from app.utils.open_ai_integration import chat_completion
-from app.utils.open_ai_message_prompting import create_messages_for_openai
+from app.utils.open_ai_message_prompting import chat_history_manager, create_messages_for_openai
 from dotenv import load_dotenv
 from app.whatsapp.chat import Sender
 import requests
@@ -30,18 +30,22 @@ def health_check():
 def reply_to_whatsapp_message():
     try:
         incoming_msg = request.form.get("Body")
-        sender = Sender(
-        phone_number=request.values.get("From"),
-        name=request.values.get("ProfileName", request.values.get("From")),
-        )
+        sender_phone = request.values.get("From")
+        sender_name = request.values.get("ProfileName", sender_phone)
+        sender = Sender(phone_number=sender_phone, name=sender_name)
         logger.debug(f"Sender: {sender}")
         logger.debug(f"Recebendo mensagem: {incoming_msg}")
 
-        # Construindo mensagens para a conversa
-        messages = create_messages_for_openai(incoming_msg)
+        # Construindo mensagens para a conversa com histórico
+        messages = create_messages_for_openai(incoming_msg, sender.phone_number)
         
         # Obtendo a resposta da OpenAI
         openai_response = chat_completion(messages)
+
+        # Atualiza o histórico com a resposta da OpenAI
+        # Após receber a resposta da OpenAI
+        chat_history_manager.update_user_history(sender.phone_number, {"role": "assistant", "content": openai_response})
+
 
         # Preparando e enviando a resposta via Twilio
         chat_client.send_message(
@@ -50,16 +54,14 @@ def reply_to_whatsapp_message():
             on_failure="Sorry, I didn't understand that. Please try again.",
         )
         logger.debug(f"Enviando resposta ao usuário: {openai_response}")
-        resp = MessagingResponse()
-        resp.message(openai_response)
-        return str(resp)
 
     except Exception as e:
         logger.error(f"Erro ao processar a mensagem: {e}")
         return jsonify({"error": str(e)}), 500
+    
+    return jsonify({"status": "ok"})
 
 @app.route("/whatsapp/status", methods=["POST"])
 def process_whatsapp_status():
     logger.info(f"Obtained request: {dict(request.values)}")
     return jsonify({"status": "ok"})
-

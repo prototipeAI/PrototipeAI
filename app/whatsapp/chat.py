@@ -8,6 +8,6 @@ from typing import Union, Callable
 class Sender:
     phone_number: str
     name: str
-    country: str = None
-    max_messages: int = 50
+    #country: str = None
+    #max_messages: int = 50
 
