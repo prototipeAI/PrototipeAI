@@ -2,7 +2,7 @@ cd # external requirements
 certifi==2022.12.7
 chardet==3.0.4
 typer>=0.6.1
-Flask[async]>=2.1.0
+Flask>=2.1.0
 idna==2.8
 jinja2>=2.11.3
 pyjwt>=2.4.0
