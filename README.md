@@ -1,4 +1,4 @@
-# Prototipai
+# PrototipeAI
 
 Este aplicativo faz a integração de forma fácil entre Twilio, OpenAI, e WhatsApp, possibilitando aos usuários receber mensagens no WhatsApp e deixar a inteligência artificial responder automaticamente, baseado em seu prompt.
 
