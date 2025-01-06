@@ -7,7 +7,7 @@ load_dotenv()
 client=OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Configura a chave da API da OpenAI
 
-def chat_completion(messages, model="gpt-4-turbo-preview", **kwargs):
+def chat_completion(messages, model="gpt-4o", **kwargs):
     try:
         response = client.chat.completions.create(
             model=model,

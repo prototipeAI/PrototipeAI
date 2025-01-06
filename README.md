@@ -4,7 +4,7 @@ Este aplicativo faz a integração de forma fácil entre Twilio, OpenAI, e Whats
 
 ## Pré-requisitos
 
-Antes de iniciar, certifique-se de ter o Python instalado em seu sistema. Além disso, você precisará de contas no Twilio e na OpenAI, pois elas fornecerão as chaves API necessárias para o funcionamento do aplicativo.
+Antes de iniciar, certifique-se de ter o Python instalado em seu sistema e todos os requirements atualizados. Além disso, você precisará de contas no Twilio e na OpenAI, pois elas fornecerão as chaves API necessárias para o funcionamento do aplicativo no whatsapp. Caso opte por testar localmente a única chave necessária é a da openAI no .env .
 
 ## Configuração
 
@@ -13,18 +13,18 @@ Antes de iniciar, certifique-se de ter o Python instalado em seu sistema. Além 
 Você precisará configurar as seguintes variáveis de ambiente antes de iniciar o aplicativo. Para sua conveniência, deixei um arquivo `.env.exemplo` no repositório. Copie este arquivo para um novo chamado `.env` e preencha com suas informações:
 
 
-* TWILIO_ACCOUNT_SID=seu_account_sid_aqui
-* TWILIO_AUTH_TOKEN=seu_auth_token_aqui
-* OPENAI_API_KEY=sua_api_key_openai_aqui
-* TWILLIO_WHATSAPP_NUMBER=+14155238886
+* [Caso use Whatsapp]TWILIO_ACCOUNT_SID=seu_account_sid_aqui
+* [Caso use Whatsapp]TWILIO_AUTH_TOKEN=seu_auth_token_aqui
+* [Necessário]OPENAI_API_KEY=sua_api_key_openai_aqui
+* [Caso use Whatsapp]TWILLIO_WHATSAPP_NUMBER=+14155238886
 
 ## Instalação
 
 Clone o repositório e instale as dependências necessárias:
 
 
-1. `git clone https://github.com/prototipaai/Prototipaai.git`
-2.  `cd prototipaai`
+1. `git clone https://github.com/prototipeAI/PrototipeAI `
+2.  `cd PrototipeAI `
 3.  `pip install -r requirements.txt` [Para pegar todas as necessidades do projeto]
 
 
@@ -48,4 +48,8 @@ Após configurar todas as variáveis e o Ngrok, você pode iniciar o aplicativo 
 
 ## Uso
 
+### Whatsapp
 Com o aplicativo rodando, qualquer mensagem recebida pelo seu número do WhatsApp configurado será automaticamente respondida pela inteligência artificial baseada nos parâmetros definidos em seu código.
+
+### Local
+Qualquer mensagem enviada na caixa de mensagens será processada, utilizando o prompt no arquivo open_ai_message_prompting.py, conforme a realização de alterações nos arquivos derrube o servidor utilizando (CTRL+C) e comece novamente.

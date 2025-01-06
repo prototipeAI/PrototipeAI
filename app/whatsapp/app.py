@@ -1,7 +1,8 @@
-import os, logging
-from flask import Flask, request, jsonify
+import os
+import logging
+from flask import Flask, request, jsonify, render_template
 from clients.twilio import TwilioWhatsAppClient, TwilioWhatsAppMessage
-from twilio.twiml.messaging_response import MessagingResponse  # Certifique-se de ter essa importação
+from twilio.twiml.messaging_response import MessagingResponse
 from app.utils.open_ai_integration import chat_completion
 from app.utils.open_ai_message_prompting import chat_history_manager, create_messages_for_openai
 from dotenv import load_dotenv
@@ -13,19 +14,62 @@ load_dotenv()
 logging.basicConfig()
 logger = logging.getLogger("WP-APP")
 logger.setLevel(logging.DEBUG)
-# Correção na inicialização do TwilioWhatsAppClient com os.getenv para buscar variáveis de ambiente
+
+# Inicialização do cliente Twilio WhatsApp
 chat_client = TwilioWhatsAppClient(
     account_sid=os.getenv("TWILIO_ACCOUNT_SID"),
     auth_token=os.getenv("TWILIO_AUTH_TOKEN"),
     from_number=os.getenv("TWILIO_WHATSAPP_NUMBER"),
 )
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 @app.route("/", methods=["GET"])
-def health_check():
-    return "App is running!"
+def home():
+    return render_template("index.html")
 
+# Rotas para as diferentes funcionalidades
+@app.route("/test/chat", methods=["POST"])
+def test_chat():
+    try:
+        message = request.form.get("message")
+        response = chat_completion(create_messages_for_openai(message, "test_user"))
+        return jsonify({"response": response})
+    except Exception as e:
+        logger.error(f"Erro no teste de Chat: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/test/automacao", methods=["POST"])
+def test_automacao():
+    try:
+        command = request.form.get("command")        
+        result = f"Comando '{command}' executado com sucesso."
+        return jsonify({"result": result})
+    except Exception as e:
+        logger.error(f"Erro no teste de Automação: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/test/recuperacao", methods=["POST"])
+def test_recuperacao():
+    try:
+        query = request.form.get("query")
+        result = f"Resultados para a consulta '{query}': [Dados fictícios]"
+        return jsonify({"result": result})
+    except Exception as e:
+        logger.error(f"Erro no teste de Recuperação de Informação: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/test/faq", methods=["POST"])
+def test_faq():
+    try:
+        question = request.form.get("question")
+        response = chat_completion(create_messages_for_openai(question, "faq_user"))
+        return jsonify({"response": response})
+    except Exception as e:
+        logger.error(f"Erro no teste de FAQ: {e}")
+        return jsonify({"error": str(e)}), 500
+
+# Rotas existentes para WhatsApp
 @app.route("/whatsapp/reply", methods=["POST"])
 def reply_to_whatsapp_message():
     try:
@@ -43,9 +87,7 @@ def reply_to_whatsapp_message():
         openai_response = chat_completion(messages)
 
         # Atualiza o histórico com a resposta da OpenAI
-        # Após receber a resposta da OpenAI
         chat_history_manager.update_user_history(sender.phone_number, {"role": "assistant", "content": openai_response})
-
 
         # Preparando e enviando a resposta via Twilio
         chat_client.send_message(

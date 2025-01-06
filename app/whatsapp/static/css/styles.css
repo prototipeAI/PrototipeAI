@@ -1,0 +1,91 @@
+/* app/whatsapp/static/css/styles.css */
+
+/* Ajuste no corpo da página para evitar sobreposição */
+body {
+    background-color: #f8f9fa;
+}
+
+h1, h2 {
+    margin-bottom: 30px;
+}
+
+.nav-tabs .nav-link {
+    font-size: 1.1em;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+}
+
+.chat-window {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.message.user {
+    align-self: flex-end;
+    background-color: #dcf8c6;
+    color: #000;
+}
+
+.message.agent {
+    align-self: flex-start;
+    background-color: #ece5dd;
+    color: #000;
+}
+
+.message.loading {
+    font-style: italic;
+    color: #888;
+}
+
+.message-input {
+    display: flex;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+#message-text {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#send-button {
+    margin-left: 10px;
+    padding: 0 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.parameters {
+    /* Estilos para a seção de parâmetros */
+}
+
+.parameters form .form-group {
+    margin-bottom: 15px;
+}

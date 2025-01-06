@@ -1,0 +1,81 @@
+<!-- app/whatsapp/templates/chat.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat com o seu Agente de IA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<!-- app/whatsapp/templates/chat.html -->
+<div class="mt-4">
+    <h3>Chat com o seu agente de IA</h3>
+    <div id="chat-container">
+        <div class="chat-window" id="chat-window">
+            <!-- As mensagens serão exibidas aqui -->
+        </div>
+        <div class="message-input">
+            <textarea id="message-text" placeholder="Digite sua mensagem..." rows="3"></textarea>
+            <button id="send-button" class="btn btn-primary">Enviar</button>
+        </div>
+        <!-- Seção de Configurações de Parâmetros (Work in progress) -->
+        <div class="parameters mt-3">
+            <button class="btn btn-secondary d-none" 
+                type="button" 
+                data-toggle="collapse" 
+                data-target="#parameter-collapse" 
+                aria-expanded="false" 
+                aria-controls="parameter-collapse">
+                Configurar Parâmetros WIP
+            </button>
+    
+            <div class="collapse mt-2" id="parameter-collapse">
+                <form id="parameter-form">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="model">Modelo</label>
+                            <select id="model" name="model" class="form-control">                        
+                                <option value="gpt-4o">gpt-4o</option>
+                                <option value="gpt-4o-mini">gpt-4o-mini</option>
+                                <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+                                <!-- Adicione outros modelos conforme necessário -->
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="temperature">Temperature</label>
+                            <input type="number" step="0.1" min="0" max="1" class="form-control" id="temperature" name="temperature" placeholder="0.7">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="top_p">Top P</label>
+                            <input type="number" step="0.1" min="0" max="1" class="form-control" id="top_p" name="top_p" placeholder="1.0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="frequency_penalty">Frequency Penalty</label>
+                            <input type="number" step="0.1" min="0" max="2" class="form-control" id="frequency_penalty" name="frequency_penalty" placeholder="0.0">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="presence_penalty">Presence Penalty</label>
+                            <input type="number" step="0.1" min="0" max="2" class="form-control" id="presence_penalty" name="presence_penalty" placeholder="0.0">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="max_tokens">Max completion Token</label>
+                            <input type="number" step="1" min="50" max="32000" class="form-control" id="max_tokens" name="max_tokens" placeholder="150">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
