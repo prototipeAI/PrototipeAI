@@ -38,7 +38,9 @@ Para que o Twilio consiga se comunicar com seu aplicativo local, você precisar�
 
 `ngrok http 3000 (em nosso caso)`
 
-3. Copie a URL fornecida pelo Ngrok (por exemplo, \`https://abc123.ngrok.io\`) e configure no seu painel do Twilio para o webhook do WhatsApp com essa URL, seguida pelo caminho específico que o aplicativo utiliza para receber mensagens (por exemplo, \`https://abc123.ngrok.io/messages\`).
+3. Copie a URL fornecida pelo Ngrok (por exemplo, \`https://abc123.ngrok.io\`) e configure no seu painel do Twilio para o webhook do WhatsApp com essa URL, seguida pelo caminho específico que o aplicativo utiliza para receber mensagens.
+
+As rotas ficam em POST e usam https://abc123.ngrok.io/reply/messages para receber devolver as mensagens e https://abc123.ngrok.io/reply/status para recuperar o status da mensagem.
 
 ## Como Rodar o Aplicativo
 
